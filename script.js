@@ -44,16 +44,16 @@ if (vid) {
         setTimeout(() => { veil.classList.remove('visible'); }, 1200);
     });
 
-    // Replay video when user scrolls back up to the intro section
+    // Replay video only when user has scrolled all the way back to the top
     const introObserver = new IntersectionObserver((entries) => {
         entries.forEach(entry => {
-            if (entry.isIntersecting && videoHasEnded) {
+            if (entry.isIntersecting && videoHasEnded && window.scrollY < 100) {
                 videoHasEnded = false;
                 vid.currentTime = 0;
                 vid.play().catch(() => {});
             }
         });
-    }, { threshold: 0.3 });
+    }, { threshold: 0.5 });
     introObserver.observe(document.getElementById('intro'));
 }
 
@@ -89,11 +89,18 @@ function updateActiveSection() {
 window.addEventListener('scroll', updateActiveSection, { passive: true });
 updateActiveSection();
 
-// Sidebar click to scroll
+// Sidebar click to scroll + briefly show label on mobile tap
+let tapLabelTimer = null;
 sideItems.forEach(item => {
     item.addEventListener('click', () => {
         const target = document.getElementById(item.dataset.target);
         if (target) target.scrollIntoView({ behavior: 'smooth' });
+
+        // Show label on tap (useful on mobile where there's no hover)
+        sideItems.forEach(i => i.classList.remove('tapped'));
+        item.classList.add('tapped');
+        clearTimeout(tapLabelTimer);
+        tapLabelTimer = setTimeout(() => item.classList.remove('tapped'), 1800);
     });
 });
 

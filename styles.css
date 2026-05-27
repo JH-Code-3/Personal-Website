@@ -120,7 +120,16 @@ nav.scrolled {
     box-shadow: 0 0 10px rgba(232,25,44,0.6);
     transform: scale(1.25);
 }
-@media (max-width: 860px) { .side-nav { display: none; } }
+@media (max-width: 860px) {
+    .side-nav { right: 16px; gap: 18px; }
+    .side-nav-dot { width: 6px; height: 6px; }
+}
+
+.side-nav-item.tapped .side-nav-label {
+    opacity: 1;
+    transform: translateX(0);
+    color: var(--text);
+}
 
 /* ── HAMBURGER BUTTON ── */
 .nav-hamburger {

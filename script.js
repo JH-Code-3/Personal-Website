@@ -36,18 +36,27 @@ if (vid) {
         requestAnimationFrame(step);
     }
 
-    // Auto-scroll to hero every time the video ends
+    // Auto-scroll to hero only if user is still in the intro section when video ends
+    let wasScrolledDown = false;
     vid.addEventListener('ended', () => {
         videoHasEnded = true;
-        veil.classList.add('visible');
-        slowScrollTo(document.getElementById('hero'), 2200);
-        setTimeout(() => { veil.classList.remove('visible'); }, 1200);
+        wasScrolledDown = false;
+
+        if (window.scrollY < 100) {
+            // User is still watching the intro — fade and scroll to hero
+            veil.classList.add('visible');
+            slowScrollTo(document.getElementById('hero'), 2200);
+            setTimeout(() => { veil.classList.remove('visible'); }, 1200);
+            // Delay so the animation moves past scrollY=10 before replay can trigger
+            setTimeout(() => { wasScrolledDown = true; }, 600);
+        } else {
+            // User already scrolled away — skip auto-scroll, enable replay immediately
+            wasScrolledDown = true;
+        }
     });
 
-    // Replay video when user scrolls all the way back to the top after having scrolled down
-    let wasScrolledDown = false;
+    // Replay video when user scrolls all the way back to the very top
     window.addEventListener('scroll', () => {
-        if (window.scrollY > 200) wasScrolledDown = true;
         if (videoHasEnded && wasScrolledDown && window.scrollY < 10) {
             videoHasEnded = false;
             wasScrolledDown = false;

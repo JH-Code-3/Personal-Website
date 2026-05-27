@@ -44,17 +44,17 @@ if (vid) {
         setTimeout(() => { veil.classList.remove('visible'); }, 1200);
     });
 
-    // Replay video only when user has scrolled all the way back to the top
-    const introObserver = new IntersectionObserver((entries) => {
-        entries.forEach(entry => {
-            if (entry.isIntersecting && videoHasEnded && window.scrollY < 100) {
-                videoHasEnded = false;
-                vid.currentTime = 0;
-                vid.play().catch(() => {});
-            }
-        });
-    }, { threshold: 0.5 });
-    introObserver.observe(document.getElementById('intro'));
+    // Replay video when user scrolls all the way back to the top after having scrolled down
+    let wasScrolledDown = false;
+    window.addEventListener('scroll', () => {
+        if (window.scrollY > 200) wasScrolledDown = true;
+        if (videoHasEnded && wasScrolledDown && window.scrollY < 10) {
+            videoHasEnded = false;
+            wasScrolledDown = false;
+            vid.currentTime = 0;
+            vid.play().catch(() => {});
+        }
+    }, { passive: true });
 }
 
 // Top nav: frosted glass on scroll

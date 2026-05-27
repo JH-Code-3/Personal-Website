@@ -7,19 +7,28 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="styles.css">
+    <script>
+        if ('scrollRestoration' in history) history.scrollRestoration = 'manual';
+        if (window.location.hash) history.replaceState(null, '', window.location.pathname);
+    </script>
 </head>
 <body>
 
 <!-- ── TOP NAV ── -->
 <nav id="navbar">
     <div class="nav-logo">JH</div>
-    <ul class="nav-links">
+    <ul class="nav-links" id="nav-links">
         <li><a href="#hero">Home</a></li>
         <li><a href="#about">About</a></li>
         <li><a href="#experience">Experience</a></li>
         <li><a href="#education">Education</a></li>
         <li><a href="#contact">Contact</a></li>
     </ul>
+    <button class="nav-hamburger" id="nav-hamburger" aria-label="Toggle menu">
+        <span></span>
+        <span></span>
+        <span></span>
+    </button>
 </nav>
 
 <!-- ── SIDEBAR NAV ── -->
@@ -94,18 +103,22 @@
                 <div class="stat-card reveal reveal-d1">
                     <div class="stat-value">6K+</div>
                     <div class="stat-label">Students &amp; Staff Supported</div>
+                    <div class="stat-context">IT technical support at Aurora University</div>
                 </div>
                 <div class="stat-card reveal reveal-d2">
                     <div class="stat-value">500+</div>
                     <div class="stat-label">Suspicious Patterns Flagged</div>
+                    <div class="stat-context">Financial fraud analysis at Trace Forensic Experts</div>
                 </div>
                 <div class="stat-card reveal reveal-d1">
                     <div class="stat-value">1,200</div>
                     <div class="stat-label">Endpoints Secured</div>
+                    <div class="stat-context">Campus-wide device security at Aurora University</div>
                 </div>
                 <div class="stat-card reveal reveal-d2">
                     <div class="stat-value">2K+</div>
                     <div class="stat-label">Transactions Documented</div>
+                    <div class="stat-context">Fraud investigation at Trace Forensic Experts</div>
                 </div>
             </div>
         </div>
@@ -236,6 +249,8 @@
 <footer>
     <p>© 2026 Jeffery Hillmer</p>
 </footer>
+
+<button class="back-to-top" id="back-to-top" aria-label="Back to top">&#8679; Back to Top</button>
 
 <script src="script.js"></script>
 </body>

@@ -1,3 +1,8 @@
+// Scroll to top instantly on load (scrollRestoration set to manual in <head>)
+document.documentElement.style.scrollBehavior = 'auto';
+window.scrollTo(0, 0);
+document.documentElement.style.scrollBehavior = '';
+
 // Force video play
 const vid = document.getElementById('hero-video');
 if (vid) {
@@ -31,7 +36,7 @@ if (vid) {
         requestAnimationFrame(step);
     }
 
-    // Fade veil and begin scroll simultaneously the moment video ends
+    // Auto-scroll to hero every time the video ends
     vid.addEventListener('ended', () => {
         videoHasEnded = true;
         veil.classList.add('visible');
@@ -59,28 +64,45 @@ window.addEventListener('scroll', () => {
 }, { passive: true });
 
 // Sidebar + top nav active state
-const sections  = document.querySelectorAll('section[id]');
 const topLinks  = document.querySelectorAll('.nav-links a');
 const sideItems = document.querySelectorAll('.side-nav-item');
 
-const sectionObserver = new IntersectionObserver((entries) => {
-    entries.forEach(entry => {
-        if (!entry.isIntersecting) return;
-        const id = entry.target.id;
-        topLinks.forEach(link => {
-            link.classList.toggle('active', link.getAttribute('href') === '#' + id);
-        });
-        sideItems.forEach(item => {
-            item.classList.toggle('active', item.dataset.target === id);
-        });
+const trackedSections = [
+    document.getElementById('intro'),
+    ...document.querySelectorAll('section[id]')
+];
+
+function updateActiveSection() {
+    const scrollMid = window.scrollY + window.innerHeight * 0.35;
+    let activeId = trackedSections[0].id;
+    trackedSections.forEach(el => {
+        if (el.offsetTop <= scrollMid) activeId = el.id;
     });
-}, { threshold: 0.4 });
-sections.forEach(s => sectionObserver.observe(s));
+    topLinks.forEach(link => {
+        link.classList.toggle('active', link.getAttribute('href') === '#' + activeId);
+    });
+    sideItems.forEach(item => {
+        item.classList.toggle('active', item.dataset.target === activeId);
+    });
+}
+
+window.addEventListener('scroll', updateActiveSection, { passive: true });
+updateActiveSection();
 
 // Sidebar click to scroll
 sideItems.forEach(item => {
     item.addEventListener('click', () => {
         const target = document.getElementById(item.dataset.target);
+        if (target) target.scrollIntoView({ behavior: 'smooth' });
+    });
+});
+
+// Intercept all internal anchor links so they don't write a hash to the URL
+// (a hash in the URL causes the browser to jump there on refresh)
+document.querySelectorAll('a[href^="#"]').forEach(link => {
+    link.addEventListener('click', e => {
+        e.preventDefault();
+        const target = document.getElementById(link.getAttribute('href').slice(1));
         if (target) target.scrollIntoView({ behavior: 'smooth' });
     });
 });
@@ -96,3 +118,38 @@ const revealObserver = new IntersectionObserver((entries) => {
     });
 }, { threshold: 0.1 });
 revealEls.forEach(el => revealObserver.observe(el));
+
+// Hamburger menu
+const hamburger = document.getElementById('nav-hamburger');
+const navLinks  = document.getElementById('nav-links');
+hamburger.addEventListener('click', () => {
+    hamburger.classList.toggle('open');
+    navLinks.classList.toggle('open');
+});
+navLinks.querySelectorAll('a').forEach(link => {
+    link.addEventListener('click', () => {
+        hamburger.classList.remove('open');
+        navLinks.classList.remove('open');
+    });
+});
+
+// Back-to-top button with footer avoidance
+const backToTop = document.getElementById('back-to-top');
+const footer    = document.querySelector('footer');
+
+window.addEventListener('scroll', () => {
+    backToTop.classList.toggle('visible', window.scrollY > 400);
+
+    const defaultBottom = 36;
+    const btnH = backToTop.offsetHeight || 42;
+    const footerTop = footer.getBoundingClientRect().top;
+    if (footerTop < window.innerHeight - defaultBottom - btnH) {
+        backToTop.style.bottom = (window.innerHeight - footerTop + 12) + 'px';
+    } else {
+        backToTop.style.bottom = '';
+    }
+}, { passive: true });
+
+backToTop.addEventListener('click', () => {
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+});

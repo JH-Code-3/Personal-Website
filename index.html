@@ -28,6 +28,7 @@
         <li><a href="#about">About</a></li>
         <li><a href="#experience">Experience</a></li>
         <li><a href="#education">Education</a></li>
+        <li><a href="#projects">Projects</a></li>
         <li><a href="#contact">Contact</a></li>
     </ul>
     <button class="nav-hamburger" id="nav-hamburger" aria-label="Toggle menu">
@@ -57,6 +58,10 @@
     </div>
     <div class="side-nav-item" data-target="education">
         <span class="side-nav-label">Education</span>
+        <div class="side-nav-dot"></div>
+    </div>
+    <div class="side-nav-item" data-target="projects">
+        <span class="side-nav-label">Projects</span>
         <div class="side-nav-dot"></div>
     </div>
     <div class="side-nav-item" data-target="contact">
@@ -234,6 +239,60 @@
     </div>
 </section>
 
+<!-- ── PROJECTS ── -->
+<section id="projects">
+    <div class="container">
+        <div class="section-label">Personal Build</div>
+        <h2 class="section-title reveal">Personal <em>Projects</em></h2>
+        <div class="project-list">
+
+            <div class="project-card reveal">
+                <div class="project-main">
+                    <div class="project-header">
+                        <div class="project-name">PiCar-X Robot Car</div>
+                        <span class="project-badge">Personal Build</span>
+                    </div>
+                    <div class="project-desc">
+                        A fully autonomous and AI-powered robot car built on the SunFounder PiCar-X platform running
+                        Raspberry Pi and Python on Linux. The car supports multiple control modes — keyboard, web browser,
+                        and mobile app — while also operating completely on its own using onboard sensors and machine
+                        learning. Extended with large language model integrations (ChatGPT API, local Ollama, Doubao) so
+                        it can hold conversations, take natural-language commands, and narrate what it's doing in
+                        real time.
+                    </div>
+                    <div class="project-features">
+                        <div class="project-feature"><span class="feature-dot"></span>Wake-word voice control ("Hey Robot") using Vosk offline speech recognition</div>
+                        <div class="project-feature"><span class="feature-dot"></span>Obstacle avoidance &amp; cliff detection via ultrasonic + grayscale sensors</div>
+                        <div class="project-feature"><span class="feature-dot"></span>Line tracking &amp; object-stare computer vision powered by OpenCV</div>
+                        <div class="project-feature"><span class="feature-dot"></span>LLM integration — ChatGPT API, local Ollama models &amp; Doubao for AI conversation</div>
+                        <div class="project-feature"><span class="feature-dot"></span>Storytelling robot mode — generates and narrates stories on demand</div>
+                        <div class="project-feature"><span class="feature-dot"></span>Live video streaming &amp; recording directly from the onboard camera</div>
+                        <div class="project-feature"><span class="feature-dot"></span>Autonomous treasure-hunt, bull-fight, and search-and-navigate modes</div>
+                        <div class="project-feature"><span class="feature-dot"></span>Text-to-speech output &amp; background music playback</div>
+                    </div>
+                    <div class="project-tech">
+                        <span class="skill-tag">Python</span>
+                        <span class="skill-tag">Raspberry Pi</span>
+                        <span class="skill-tag">OpenCV</span>
+                        <span class="skill-tag">Vosk STT</span>
+                        <span class="skill-tag dark">Ollama</span>
+                        <span class="skill-tag dark">ChatGPT API</span>
+                        <span class="skill-tag">Linux</span>
+                        <span class="skill-tag">PiCar-X</span>
+                    </div>
+                    <div class="project-links">
+                        <a href="https://github.com/JH-Code-3/Robot-Car" target="_blank" rel="noopener" class="btn-primary">View on GitHub</a>
+                    </div>
+                </div>
+                <div class="project-media">
+                    <img src="https://raw.githubusercontent.com/JH-Code-3/Robot-Car/main/media/IMG_0063.jpeg" alt="PiCar-X Robot Car — front sensor array and wiring" class="project-img">
+                </div>
+            </div>
+
+        </div>
+    </div>
+</section>
+
 <!-- ── CONTACT ── -->
 <section id="contact">
     <div class="container">
@@ -246,6 +305,7 @@
             </p>
             <div class="contact-links reveal">
                 <a href="https://www.linkedin.com/in/jeffery-hillmer-3798a731b" target="_blank" rel="noopener" class="btn-primary">LinkedIn Profile</a>
+                <a href="https://github.com/JH-Code-3" target="_blank" rel="noopener" class="btn-primary">GitHub</a>
             </div>
         </div>
     </div>
